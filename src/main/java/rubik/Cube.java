@@ -100,11 +100,42 @@ public class Cube {
     public Cube U2() {
         return new Cube(
             rotateFace(top),
-            replaceRow(left, 1, row(right, 1)),
-            replaceRow(front,1, reverseRow(row(back, 1))),
+            replaceRow(left,  1, row(right, 1)),
+            replaceRow(front, 1, reverseRow(row(back, 1))),
             replaceRow(right, 1, row(left, 1)),
-            replaceRow(back, 1, reverseRow(row(front, 1))),
+            replaceRow(back,  1, reverseRow(row(front, 1))),
             bottom);
+    }
+
+    public Cube L() {
+        return new Cube(
+            replaceCol(top, 1, shiftCol(3, 1, reverseCol(col(back, 3)))),
+            cwFace(left),
+            replaceCol(front, 1, col(top, 1)),
+            right,
+            replaceCol(back, 3, shiftCol(1, 3, reverseCol(col(bottom, 1)))),
+            replaceCol(bottom, 1, col(front, 1)));
+
+    }
+
+    public Cube _L() {
+        return new Cube(
+            replaceCol(top, 1, col(front, 1)),
+            ccwFace(left),
+            replaceCol(front, 1, col(bottom, 1)),
+            right,
+            replaceCol(back, 3, shiftCol(1, 3, reverseCol(col(top, 1)))),
+            replaceCol(bottom, 1, shiftCol(3, 1, reverseCol(col(back, 3)))));
+    }
+
+    public Cube L2() {
+        return new Cube(
+            replaceCol(top, 1, col(bottom, 1)),
+            rotateFace(left),
+            replaceCol(front, 1, shiftCol(3, 1, reverseCol(col(back, 3)))),
+            right,
+            replaceCol(back, 3, shiftCol(1, 3, reverseCol(col(front, 1)))),
+            replaceCol(bottom, 1, col(top, 1)));
     }
 
     /**
@@ -114,6 +145,28 @@ public class Cube {
         final int offset = 9 * (3 - r);
         final int maskErase = ~(0b111_111_111 << offset);
         return (face & maskErase) | (newRow << offset);
+    }
+
+    /**
+     * New face with replaced row.
+     */
+    static int replaceCol(int face, int c, int newCol) {
+        final int offset = 3 * (3 - c);
+        final int maskErase = ~(0b000_000_111__000_000_111__000_000_111 << offset);
+        return (face & maskErase) | newCol;
+    }
+
+    /**
+     * Return new face with the column shifted.
+     */
+    static int shiftCol(int cFrom, int cTo, int col) {
+        if (cFrom < cTo) {
+            final int offset = 3 * (cTo - cFrom);
+            return col >> offset;
+        } else {
+            final int offset = 3 * (cFrom - cTo);
+            return col << offset;
+        }
     }
 
     /**
@@ -189,6 +242,16 @@ public class Cube {
     }
 
     /**
+     * The c-th col of the face.
+     * Unlike {@link #colCw(int, int)} and {@link #colCcw(int, int)}, does not pack the column values in a row.
+     */
+    static int col(int face, int c) {
+        final int offset = 3 * (3 - c);
+        final int mask = 0b000_000_111__000_000_111__000_000_111 << offset;
+        return face & mask;
+    }
+
+    /**
      * Reverses a row.
      */
     static int reverseRow(int row) {
@@ -199,6 +262,21 @@ public class Cube {
             row & maskC3,
             (row & maskC2) >> 3,
             (row & maskC1) >> 6);
+    }
+
+    /**
+     * Reverses a column. Result can be fed into {@link #replaceCol(int, int, int)}
+     */
+    static int reverseCol(int col) {
+        /*
+         * A column touches bits in all rows in the face.
+         * Look at the col as if it were a face and move rows in place.
+         * Then the rows pattern r1-r2-r3 become r3-r2-r1.
+         */
+        int row1 = row(col, 1),
+            row2 = row(col, 2),
+            row3 = row(col, 3);
+        return makeFace(row3, row2, row1);
     }
 
     /**
