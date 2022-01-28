@@ -138,6 +138,36 @@ public class Cube {
             replaceCol(bottom, 1, col(top, 1)));
     }
 
+    public Cube R() {
+        return new Cube(
+            replaceCol(top, 3, col(front, 3)),
+            left,
+            replaceCol(front, 3, col(bottom, 3)),
+            cwFace(right),
+            replaceCol(back, 1, shiftCol(3, 1, reverseCol(col(top, 3)))),
+            replaceCol(bottom, 3, shiftCol(1, 3, reverseCol(col(back, 1)))));
+    }
+
+    public Cube _R() {
+        return new Cube(
+            replaceCol(top, 3, shiftCol(1, 3, reverseCol(col(back, 1)))),
+            left,
+            replaceCol(front, 3, col(top, 3)),
+            ccwFace(right),
+            replaceCol(back, 1, shiftCol(3, 1, reverseCol(col(bottom, 3)))),
+            replaceCol(bottom, 3, col(front, 3)));
+    }
+
+    public Cube R2() {
+        return new Cube(
+            replaceCol(top, 3, col(bottom, 3)),
+            left,
+            replaceCol(front, 3, shiftCol(1, 3, reverseCol(col(back, 1)))),
+            rotateFace(right),
+            replaceCol(back, 1, shiftCol(3, 1, reverseCol(col(front, 3)))),
+            replaceCol(bottom, 3, col(top, 3)));
+    }
+
     /**
      * New face with replaced row.
      */

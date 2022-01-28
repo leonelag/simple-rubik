@@ -177,22 +177,6 @@ public class CubeTest {
     }
 
     @Test
-    void testUTransforms() {
-        /*
-         * Rotate the top back and forth and make sure transformations are equivalent.
-         */
-        assertEquals(cube1, cube1.U2().U2());
-        assertEquals(cube1, cube1.U()._U());
-        assertEquals(cube1, cube1._U().U());
-
-        assertEquals(cube1.U(), cube1._U()._U()._U());
-        assertEquals(cube1._U(), cube1.U().U().U());
-
-        assertEquals(cube1.U2(), cube1.U().U());
-        assertEquals(cube1.U2(), cube1._U()._U());
-    }
-
-    @Test
     void testL() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1-l.txt");
         assertEquals(expectedCubeU, cube1.L());
@@ -211,6 +195,40 @@ public class CubeTest {
     }
 
     @Test
+    void testR() throws IOException {
+        var expectedCubeU = Cube.fromResource("/cube1-r.txt");
+        assertEquals(expectedCubeU, cube1.R());
+    }
+
+    @Test
+    void test_R() throws IOException {
+        var expectedCubeU = Cube.fromResource("/cube1-_r.txt");
+        assertEquals(expectedCubeU, cube1._R());
+    }
+
+    @Test
+    void testR2() throws IOException {
+        var expectedCubeU = Cube.fromResource("/cube1-r2.txt");
+        assertEquals(expectedCubeU, cube1.R2());
+    }
+
+    @Test
+    void testUTransforms() {
+        /*
+         * Rotate the top back and forth and make sure transformations are equivalent.
+         */
+        assertEquals(cube1, cube1.U2().U2());
+        assertEquals(cube1, cube1.U()._U());
+        assertEquals(cube1, cube1._U().U());
+
+        assertEquals(cube1.U(), cube1._U()._U()._U());
+        assertEquals(cube1._U(), cube1.U().U().U());
+
+        assertEquals(cube1.U2(), cube1.U().U());
+        assertEquals(cube1.U2(), cube1._U()._U());
+    }
+
+    @Test
     void testLTransforms() {
         /*
          * Rotate the LEFT back and forth and make sure transformations are equivalent.
@@ -224,6 +242,22 @@ public class CubeTest {
 
         assertEquals(cube1.L2(), cube1.L().L());
         assertEquals(cube1.L2(), cube1._L()._L());
+    }
+
+    @Test
+    void testRTransforms() {
+        /*
+         * Rotate RIGHT face back and forth and make sure transformations are equivalent.
+         */
+        assertEquals(cube1, cube1.R2().R2());
+        assertEquals(cube1, cube1.R()._R());
+        assertEquals(cube1, cube1._R().R());
+
+        assertEquals(cube1.R(), cube1._R()._R()._R());
+        assertEquals(cube1._R(), cube1.R().R().R());
+
+        assertEquals(cube1.R2(), cube1.R().R());
+        assertEquals(cube1.R2(), cube1._R()._R());
     }
 
     @Test
