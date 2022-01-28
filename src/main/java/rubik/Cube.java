@@ -1,5 +1,8 @@
 package rubik;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.OptionalInt;
 import java.util.Scanner;
@@ -13,6 +16,19 @@ public class Cube {
         } catch (NumberFormatException ex) {
             return OptionalInt.empty();
         }
+    }
+
+    private static String slurp(String resourceName) throws IOException {
+        var res = Cube.class.getResource(resourceName);
+        if (res == null) throw new FileNotFoundException("Resource not found: " + resourceName);
+        var bytes = res.openStream().readAllBytes();
+        return new String(bytes, StandardCharsets.US_ASCII);
+    }
+
+    public static Cube fromResource(String resourceName) throws IOException {
+        var txt = slurp(resourceName);
+        var sc = new Scanner(txt);
+        return Cube.read(sc);
     }
 
     public static Cube read(Scanner sc) {
@@ -61,8 +77,47 @@ public class Cube {
         this.bottom = bottom;
     }
 
+    public Cube U() {
+        return new Cube(
+            cwFace(top),
+            replaceRow(left,  1, row(front, 1)),
+            replaceRow(front, 1, row(right, 1)),
+            replaceRow(right, 1, reverseRow(row(back, 1))),
+            replaceRow(back,  1, reverseRow(row(left, 1))),
+            bottom);
+    }
+
+    public Cube _U() {
+        return new Cube(
+            ccwFace(top),
+            replaceRow(left,  1, reverseRow(row(back, 1))),
+            replaceRow(front, 1, row(left,  1)),
+            replaceRow(right, 1, row(front, 1)),
+            replaceRow(back,  1, reverseRow(row(right, 1))),
+            bottom);
+    }
+
+    public Cube U2() {
+        return new Cube(
+            rotateFace(top),
+            replaceRow(left, 1, row(right, 1)),
+            replaceRow(front,1, reverseRow(row(back, 1))),
+            replaceRow(right, 1, row(left, 1)),
+            replaceRow(back, 1, reverseRow(row(front, 1))),
+            bottom);
+    }
+
     /**
-     * Rotates a face clockwise; does not affect other faces.
+     * New face with replaced row.
+     */
+    static int replaceRow(int face, int r, int newRow) {
+        final int offset = 9 * (3 - r);
+        final int maskErase = ~(0b111_111_111 << offset);
+        return (face & maskErase) | (newRow << offset);
+    }
+
+    /**
+     * Rotates a face CW; does not affect other faces.
      */
     static int cwFace(int face) {
         return makeFace(
@@ -71,11 +126,24 @@ public class Cube {
             colCw(face, 3));
     }
 
+    /**
+     * Rotates a face CCW; does not affect other faces.
+     */
     static int ccwFace(int face) {
         return makeFace(
             colCcw(face, 3),
             colCcw(face, 2),
             colCcw(face, 1));
+    }
+
+    /**
+     * Rotates a face 180-degs; does not affect other faces.
+     */
+    static int rotateFace(int face) {
+        return makeFace(
+            reverseRow(row(face, 3)),
+            reverseRow(row(face, 2)),
+            reverseRow(row(face, 1)));
     }
 
     /**
@@ -109,6 +177,28 @@ public class Cube {
                 (face & (mask << offset1)) >> offset1,
                 (face & (mask << offset2)) >> offset2,
                 (face & (mask << offset3)) >> offset3);
+    }
+
+    /**
+     * The r-th row of the face.
+     */
+    static int row(int face, int r) {
+        final int offset = 9 * (3 - r);
+        final int mask = 0b111_111_111 << offset;
+        return (face & mask) >> offset;
+    }
+
+    /**
+     * Reverses a row.
+     */
+    static int reverseRow(int row) {
+        int maskC1 = 0b111 << 6,
+            maskC2 = 0b111 << 3,
+            maskC3 = 0b111;
+        return makeRow(
+            row & maskC3,
+            (row & maskC2) >> 3,
+            (row & maskC1) >> 6);
     }
 
     /**
@@ -232,5 +322,18 @@ public class Cube {
         }
         sb.append(edge);
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cube that = (Cube) o;
+        return this.top    == that.top
+            && this.left   == that.left
+            && this.front  == that.front
+            && this.right  == that.right
+            && this.back   == that.back
+            && this.bottom == that.bottom;
     }
 }

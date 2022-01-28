@@ -1,6 +1,5 @@
 package rubik;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -10,8 +9,13 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CubeTest {
+    private Cube cube1 = Cube.fromResource("/cube1.txt");
+
+    public CubeTest() throws IOException {}
+
     @Test
     void testRow() {
         int r = Cube.makeRow(1, 2, 3);
@@ -46,18 +50,18 @@ public class CubeTest {
     void testColCw() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
 
-        Assertions.assertEquals(Cube.makeRow(7, 4, 1), Cube.colCw(f, 1));
-        Assertions.assertEquals(Cube.makeRow(1, 5, 2), Cube.colCw(f, 2));
-        Assertions.assertEquals(Cube.makeRow(2, 6, 3), Cube.colCw(f, 3));
+        assertEquals(Cube.makeRow(7, 4, 1), Cube.colCw(f, 1));
+        assertEquals(Cube.makeRow(1, 5, 2), Cube.colCw(f, 2));
+        assertEquals(Cube.makeRow(2, 6, 3), Cube.colCw(f, 3));
     }
 
     @Test
     void testColCcw() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
 
-        Assertions.assertEquals(Cube.makeRow(3, 6, 2), Cube.colCcw(f, 3));
-        Assertions.assertEquals(Cube.makeRow(2, 5, 1), Cube.colCcw(f, 2));
-        Assertions.assertEquals(Cube.makeRow(1, 4, 7), Cube.colCcw(f, 1));
+        assertEquals(Cube.makeRow(3, 6, 2), Cube.colCcw(f, 3));
+        assertEquals(Cube.makeRow(2, 5, 1), Cube.colCcw(f, 2));
+        assertEquals(Cube.makeRow(1, 4, 7), Cube.colCcw(f, 1));
     }
 
     @Test
@@ -75,14 +79,82 @@ public class CubeTest {
             new int[] { 3, 6, 2, 2, 5, 1, 1, 4, 7 },
             Cube.faceToArray(Cube.ccwFace(f)));
     }
+
+    @Test
+    void testReplaceRow() {
+        int f1 = Cube.makeFace(1, 1, 1, 2, 2, 2, 3 ,3, 3);
+        int expected = Cube.makeFace(4, 5, 6, 2, 2, 2, 3, 3, 3);
+        assertEquals(expected, Cube.replaceRow(f1, 1, Cube.makeRow(4, 5, 6)));
+    }
+
+    @Test
+    void testReverseRow() {
+        int row = Cube.makeRow(1, 2, 3);
+        int expected = Cube.makeRow(3, 2, 1);
+        assertEquals(expected, Cube.reverseRow(row));
+    }
+
+    @Test
+    void testRotateFace() {
+        int f = Cube.makeFace(
+                1, 2, 3,
+                4, 5, 6,
+                7, 1, 2);
+        int expected = Cube.makeFace(
+                2, 1, 7,
+                6, 5, 4,
+                3, 2, 1);
+        assertEquals(expected, Cube.rotateFace(f));
+    }
+
     @Test
     void testFaceToArray() {
         // Cube does not have 9 colors, only 6; but this works for testing the method.
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
-        Assertions.assertArrayEquals(
+        assertArrayEquals(
             new int[] {1, 2, 3, 4, 5, 6, 7, 1, 2},
             Cube.faceToArray(f)
         );
+    }
+
+    @Test
+    void testU() throws IOException {
+        var expectedCubeU = Cube.fromResource("/cube1-u.txt");
+        assertEquals(expectedCubeU, cube1.U());
+    }
+
+    @Test
+    void test_U() throws IOException {
+        var expectedCubeU = Cube.fromResource("/cube1-_u.txt");
+        assertEquals(expectedCubeU, cube1._U());
+    }
+
+    @Test
+    void testU2() throws IOException {
+        var expectedCubeU = Cube.fromResource("/cube1-u2.txt");
+        assertEquals(expectedCubeU, cube1.U2());
+    }
+
+    @Test
+    void testUTransforms() {
+        /*
+         * Rotate the top back and forth and make sure transformations are equivalent.
+         */
+        assertEquals(cube1, cube1.U2().U2());
+        assertEquals(cube1, cube1.U()._U());
+        assertEquals(cube1, cube1._U().U());
+
+        assertEquals(cube1.U(), cube1._U()._U()._U());
+        assertEquals(cube1._U(), cube1.U().U().U());
+
+        assertEquals(cube1.U2(), cube1.U().U());
+        assertEquals(cube1.U2(), cube1._U()._U());
+    }
+
+    @Test
+    void testFromResource() throws IOException {
+        var cube = Cube.fromResource("/cube1.txt");
+        assertNotNull(cube);
     }
 
     @Test
