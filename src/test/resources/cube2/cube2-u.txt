@@ -1,0 +1,13 @@
+        +-------+
+        | yel blu blu |
+        | ora yel ora |
+        | yel yel yel |
++-------+-------+-------+-------+
+| red yel gre | ora gre ora | blu blu ora | blu red whi |
+| gre ora gre | whi blu yel | blu red ora | ora gre whi |
+| red gre yel | gre red whi | gre whi red | blu whi gre |
++-------+-------+-------+-------+
+        | red yel ora |
+        | red whi red |
+        | whi blu whi |
+        +-------+
