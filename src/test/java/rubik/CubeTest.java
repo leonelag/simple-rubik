@@ -1,15 +1,15 @@
 package rubik;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CubeTest {
     private final Cube cube1 = Cube.fromResource("/cube1/base.txt");
@@ -17,13 +17,13 @@ public class CubeTest {
     public CubeTest() throws IOException {}
 
     @Test
-    void testRow() {
+    public void testRow() {
         int r = Cube.makeRow(1, 2, 3);
         assertEquals(0b001_010_011, r);
     }
 
     @Test
-    void testFace() {
+    public void testFace() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
         int r1 = 0b001_010_011
           , r2 = 0b100_101_110
@@ -33,7 +33,7 @@ public class CubeTest {
     }
 
     @Test
-    void testAt() {
+    public void testAt() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
         assertEquals(1, Cube.at(f, 1, 1));
         assertEquals(2, Cube.at(f, 1, 2));
@@ -47,7 +47,7 @@ public class CubeTest {
     }
 
     @Test
-    void testColCw() {
+    public void testColCw() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
 
         assertEquals(Cube.makeRow(7, 4, 1), Cube.colCw(f, 1));
@@ -56,7 +56,7 @@ public class CubeTest {
     }
 
     @Test
-    void testColCcw() {
+    public void testColCcw() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
 
         assertEquals(Cube.makeRow(3, 6, 2), Cube.colCcw(f, 3));
@@ -65,7 +65,7 @@ public class CubeTest {
     }
 
     @Test
-    void testCwFace() {
+    public void testCwFace() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
         assertArrayEquals(
             new int[] { 7, 4, 1, 1, 5, 2, 2, 6, 3},
@@ -73,7 +73,7 @@ public class CubeTest {
     }
 
     @Test
-    void testCcwFace() {
+    public void testCcwFace() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
         assertArrayEquals(
             new int[] { 3, 6, 2, 2, 5, 1, 1, 4, 7 },
@@ -81,21 +81,21 @@ public class CubeTest {
     }
 
     @Test
-    void testReplaceRow() {
+    public void testReplaceRow() {
         int f1 = Cube.makeFace(1, 1, 1, 2, 2, 2, 3 ,3, 3);
         int expected = Cube.makeFace(4, 5, 6, 2, 2, 2, 3, 3, 3);
         assertEquals(expected, Cube.replaceRow(f1, 1, Cube.makeRow(4, 5, 6)));
     }
 
     @Test
-    void testReverseRow() {
+    public void testReverseRow() {
         int row = Cube.makeRow(1, 2, 3);
         int expected = Cube.makeRow(3, 2, 1);
         assertEquals(expected, Cube.reverseRow(row));
     }
 
     @Test
-    void testReplaceCol() {
+    public void testReplaceCol() {
         int f1 = Cube.makeFace(
             1, 2, 3,
             4, 5, 6,
@@ -112,7 +112,7 @@ public class CubeTest {
     }
 
     @Test
-    void testRotateFace() {
+    public void testRotateFace() {
         int f = Cube.makeFace(
                 1, 2, 3,
                 4, 5, 6,
@@ -125,7 +125,7 @@ public class CubeTest {
     }
 
     @Test
-    void testShiftCol_1() {
+    public void testShiftCol_1() {
         final int colRight = Cube.makeFace(       // col on the right side of the face
             0, 0, 1,
             0, 0, 2,
@@ -149,7 +149,7 @@ public class CubeTest {
     }
 
     @Test
-    void testFaceToArray() {
+    public void testFaceToArray() {
         // Cube does not have 9 colors, only 6; but this works for testing the method.
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
         assertArrayEquals(
@@ -159,79 +159,79 @@ public class CubeTest {
     }
 
     @Test
-    void testU() throws IOException {
+    public void testU() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/u.txt");
         assertEquals(expectedCubeU, cube1.U());
     }
 
     @Test
-    void test_U() throws IOException {
+    public void test_U() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/_u.txt");
         assertEquals(expectedCubeU, cube1._U());
     }
 
     @Test
-    void testU2() throws IOException {
+    public void testU2() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/u2.txt");
         assertEquals(expectedCubeU, cube1.U2());
     }
 
     @Test
-    void testL() throws IOException {
+    public void testL() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/l.txt");
         assertEquals(expectedCubeU, cube1.L());
     }
 
     @Test
-    void test_L() throws IOException {
+    public void test_L() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/_l.txt");
         assertEquals(expectedCubeU, cube1._L());
     }
 
     @Test
-    void testL2() throws IOException {
+    public void testL2() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/l2.txt");
         assertEquals(expectedCubeU, cube1.L2());
     }
 
     @Test
-    void testR() throws IOException {
+    public void testR() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/r.txt");
         assertEquals(expectedCubeU, cube1.R());
     }
 
     @Test
-    void test_R() throws IOException {
+    public void test_R() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/_r.txt");
         assertEquals(expectedCubeU, cube1._R());
     }
 
     @Test
-    void testR2() throws IOException {
+    public void testR2() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/r2.txt");
         assertEquals(expectedCubeU, cube1.R2());
     }
 
     @Test
-    void testD() throws IOException {
+    public void testD() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/d.txt");
         assertEquals(expectedCubeU, cube1.D());
     }
 
     @Test
-    void test_D() throws IOException {
+    public void test_D() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/_d.txt");
         assertEquals(expectedCubeU, cube1._D());
     }
 
     @Test
-    void testD2() throws IOException {
+    public void testD2() throws IOException {
         var expectedCubeU = Cube.fromResource("/cube1/d2.txt");
         assertEquals(expectedCubeU, cube1.D2());
     }
 
     @Test
-    void testDTransforms() {
+    public void testDTransforms() {
         /*
          * Rotate the top back and forth and make sure transformations are equivalent.
          */
@@ -247,7 +247,7 @@ public class CubeTest {
     }
 
     @Test
-    void testUTransforms() {
+    public void testUTransforms() {
         /*
          * Rotate the top back and forth and make sure transformations are equivalent.
          */
@@ -263,7 +263,7 @@ public class CubeTest {
     }
 
     @Test
-    void testLTransforms() {
+    public void testLTransforms() {
         /*
          * Rotate the LEFT back and forth and make sure transformations are equivalent.
          */
@@ -279,7 +279,7 @@ public class CubeTest {
     }
 
     @Test
-    void testRTransforms() {
+    public void testRTransforms() {
         /*
          * Rotate RIGHT face back and forth and make sure transformations are equivalent.
          */
@@ -295,13 +295,13 @@ public class CubeTest {
     }
 
     @Test
-    void testFromResource() throws IOException {
+    public void testFromResource() throws IOException {
         var cube = Cube.fromResource("/cube1/base.txt");
         assertNotNull(cube);
     }
 
     @Test
-    void testRead() throws IOException {
+    public void testRead() throws IOException {
         var txt = slurp("/cube1/base.txt");
 
         var sc = new Scanner(txt);
