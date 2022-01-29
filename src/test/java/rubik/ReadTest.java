@@ -18,8 +18,8 @@ public class ReadTest {
     @Parameterized.Parameters(name="{0}")
     public static Collection<String> baseDirs() {
         return Arrays.asList(
-                "/cube1"
-//            "/cube2"
+            "/cube1",
+            "/cube2"
         );
     }
 
