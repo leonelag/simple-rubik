@@ -28,10 +28,7 @@ public class Cube {
     public static Cube fromResource(String resourceName) throws IOException {
         var txt = slurp(resourceName);
         var sc = new Scanner(txt);
-        return Cube.read(sc);
-    }
 
-    public static Cube read(Scanner sc) {
         final int nCells = 9 * 6;
         final int[] arr = new int[nCells];
         for (int i = 0; i < nCells; i++) {

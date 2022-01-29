@@ -162,16 +162,8 @@ public class CubeTest {
     public void testFromResource() throws IOException {
         var cube = Cube.fromResource("/cube1/base.txt");
         assertNotNull(cube);
-    }
 
-    @Test
-    public void testRead() throws IOException {
         var txt = slurp("/cube1/base.txt");
-
-        var sc = new Scanner(txt);
-        var cube = Cube.read(sc);
-        System.out.println(cube);
-
         assertEquals(txt, cube.toString());
     }
 
