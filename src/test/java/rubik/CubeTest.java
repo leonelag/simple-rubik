@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CubeTest {
-    private Cube cube1 = Cube.fromResource("/cube1/cube1.txt");
+    private final Cube cube1 = Cube.fromResource("/cube1/base.txt");
 
     public CubeTest() throws IOException {}
 
@@ -160,73 +160,73 @@ public class CubeTest {
 
     @Test
     void testU() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-u.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/u.txt");
         assertEquals(expectedCubeU, cube1.U());
     }
 
     @Test
     void test_U() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-_u.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/_u.txt");
         assertEquals(expectedCubeU, cube1._U());
     }
 
     @Test
     void testU2() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-u2.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/u2.txt");
         assertEquals(expectedCubeU, cube1.U2());
     }
 
     @Test
     void testL() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-l.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/l.txt");
         assertEquals(expectedCubeU, cube1.L());
     }
 
     @Test
     void test_L() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-_l.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/_l.txt");
         assertEquals(expectedCubeU, cube1._L());
     }
 
     @Test
     void testL2() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-l2.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/l2.txt");
         assertEquals(expectedCubeU, cube1.L2());
     }
 
     @Test
     void testR() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-r.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/r.txt");
         assertEquals(expectedCubeU, cube1.R());
     }
 
     @Test
     void test_R() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-_r.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/_r.txt");
         assertEquals(expectedCubeU, cube1._R());
     }
 
     @Test
     void testR2() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-r2.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/r2.txt");
         assertEquals(expectedCubeU, cube1.R2());
     }
 
     @Test
     void testD() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-d.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/d.txt");
         assertEquals(expectedCubeU, cube1.D());
     }
 
     @Test
     void test_D() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-_d.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/_d.txt");
         assertEquals(expectedCubeU, cube1._D());
     }
 
     @Test
     void testD2() throws IOException {
-        var expectedCubeU = Cube.fromResource("/cube1/cube1-d2.txt");
+        var expectedCubeU = Cube.fromResource("/cube1/d2.txt");
         assertEquals(expectedCubeU, cube1.D2());
     }
 
@@ -296,13 +296,13 @@ public class CubeTest {
 
     @Test
     void testFromResource() throws IOException {
-        var cube = Cube.fromResource("/cube1/cube1.txt");
+        var cube = Cube.fromResource("/cube1/base.txt");
         assertNotNull(cube);
     }
 
     @Test
     void testRead() throws IOException {
-        var txt = slurp("/cube1/cube1.txt");
+        var txt = slurp("/cube1/base.txt");
 
         var sc = new Scanner(txt);
         var cube = Cube.read(sc);
