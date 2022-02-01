@@ -38,7 +38,7 @@ public class StepsTest {
     @Test
     public void test_U() throws IOException {
         var expectedCubeU = Cube.fromResource(baseDir + "/u_.txt");
-        assertEquals(expectedCubeU, cube._U());
+        assertEquals(expectedCubeU, cube.U_());
     }
 
     @Test
@@ -123,14 +123,14 @@ public class StepsTest {
          * Rotate the top back and forth and make sure transformations are equivalent.
          */
         assertEquals(cube, cube.U2().U2());
-        assertEquals(cube, cube.U()._U());
-        assertEquals(cube, cube._U().U());
+        assertEquals(cube, cube.U().U_());
+        assertEquals(cube, cube.U_().U());
 
-        assertEquals(cube.U(), cube._U()._U()._U());
-        assertEquals(cube._U(), cube.U().U().U());
+        assertEquals(cube.U(), cube.U_().U_().U_());
+        assertEquals(cube.U_(), cube.U().U().U());
 
         assertEquals(cube.U2(), cube.U().U());
-        assertEquals(cube.U2(), cube._U()._U());
+        assertEquals(cube.U2(), cube.U_().U_());
     }
 
     @Test

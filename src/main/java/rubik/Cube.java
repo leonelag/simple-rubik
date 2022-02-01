@@ -79,18 +79,18 @@ public class Cube {
             cwFace(top),
             replaceRow(left,  1, row(front, 1)),
             replaceRow(front, 1, row(right, 1)),
-            replaceRow(right, 1, reverseRow(row(back, 1))),
-            replaceRow(back,  1, reverseRow(row(left, 1))),
+            replaceRow(right, 1, row(back, 1)),
+            replaceRow(back,  1, row(left, 1)),
             bottom);
     }
 
-    public Cube _U() {
+    public Cube U_() {
         return new Cube(
             ccwFace(top),
-            replaceRow(left,  1, reverseRow(row(back, 1))),
+            replaceRow(left,  1, row(back, 1)),
             replaceRow(front, 1, row(left,  1)),
             replaceRow(right, 1, row(front, 1)),
-            replaceRow(back,  1, reverseRow(row(right, 1))),
+            replaceRow(back,  1, row(right, 1)),
             bottom);
     }
 
@@ -98,9 +98,9 @@ public class Cube {
         return new Cube(
             rotateFace(top),
             replaceRow(left,  1, row(right, 1)),
-            replaceRow(front, 1, reverseRow(row(back, 1))),
+            replaceRow(front, 1, row(back, 1)),
             replaceRow(right, 1, row(left, 1)),
-            replaceRow(back,  1, reverseRow(row(front, 1))),
+            replaceRow(back,  1, row(front, 1)),
             bottom);
     }
 
