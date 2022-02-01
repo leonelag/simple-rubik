@@ -1,13 +1,13 @@
         +-------+
-        | whi red whi |
-        | gre yel whi |
-        | gre red whi |
+        | ora gre gre |
+        | red yel whi |
+        | red red yel |
 +-------+-------+-------+-------+
-| red whi whi | ora yel red | blu blu blu | gre whi ora |
-| whi ora yel | gre blu red | blu red blu | ora gre ora |
-| yel ora yel | ora gre red | blu blu blu | red red ora |
+| blu blu blu | whi whi ora | blu blu yel | red red whi |
+| ora ora whi | gre blu ora | whi red blu | ora gre yel |
+| red yel whi | gre yel red | blu blu yel | ora gre whi |
 +-------+-------+-------+-------+
-        | gre ora yel |
-        | yel whi yel |
-        | gre gre yel |
+        | ora red yel |
+        | gre whi yel |
+        | gre ora gre |
         +-------+
