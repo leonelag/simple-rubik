@@ -47,6 +47,22 @@ public class StepsTest {
     }
 
     @Test
+    public void testUTransforms() {
+        /*
+         * Rotate the top back and forth and make sure transformations are equivalent.
+         */
+        assertCubeEquals(cube, cube.U2().U2());
+        assertCubeEquals(cube, cube.U().U_());
+        assertCubeEquals(cube, cube.U_().U());
+
+        assertCubeEquals(cube.U(), cube.U_().U_().U_());
+        assertCubeEquals(cube.U_(), cube.U().U().U());
+
+        assertCubeEquals(cube.U2(), cube.U().U());
+        assertCubeEquals(cube.U2(), cube.U_().U_());
+    }
+
+    @Test
     public void testL() throws IOException {
         var expectedCubeU = Cube.fromResource(baseDir + "/l.txt");
         assertCubeEquals(expectedCubeU, cube.L());
@@ -65,6 +81,22 @@ public class StepsTest {
     }
 
     @Test
+    public void testLTransforms() {
+        /*
+         * Rotate the LEFT back and forth and make sure transformations are equivalent.
+         */
+        assertCubeEquals(cube, cube.L2().L2());
+        assertCubeEquals(cube, cube.L()._L());
+        assertCubeEquals(cube, cube._L().L());
+
+        assertCubeEquals(cube.L(), cube._L()._L()._L());
+        assertCubeEquals(cube._L(), cube.L().L().L());
+
+        assertCubeEquals(cube.L2(), cube.L().L());
+        assertCubeEquals(cube.L2(), cube._L()._L());
+    }
+
+    @Test
     public void testR() throws IOException {
         var expectedCubeU = Cube.fromResource(baseDir + "/r.txt");
         assertCubeEquals(expectedCubeU, cube.R());
@@ -80,6 +112,22 @@ public class StepsTest {
     public void testR2() throws IOException {
         var expectedCubeU = Cube.fromResource(baseDir + "/r2.txt");
         assertCubeEquals(expectedCubeU, cube.R2());
+    }
+
+    @Test
+    public void testRTransforms() {
+        /*
+         * Rotate RIGHT face back and forth and make sure transformations are equivalent.
+         */
+        assertCubeEquals(cube, cube.R2().R2());
+        assertCubeEquals(cube, cube.R()._R());
+        assertCubeEquals(cube, cube._R().R());
+
+        assertCubeEquals(cube.R(), cube._R()._R()._R());
+        assertCubeEquals(cube._R(), cube.R().R().R());
+
+        assertCubeEquals(cube.R2(), cube.R().R());
+        assertCubeEquals(cube.R2(), cube._R()._R());
     }
 
     @Test
@@ -114,54 +162,6 @@ public class StepsTest {
 
         assertCubeEquals(cube.D2(), cube.D().D());
         assertCubeEquals(cube.D2(), cube._D()._D());
-    }
-
-    @Test
-    public void testUTransforms() {
-        /*
-         * Rotate the top back and forth and make sure transformations are equivalent.
-         */
-        assertCubeEquals(cube, cube.U2().U2());
-        assertCubeEquals(cube, cube.U().U_());
-        assertCubeEquals(cube, cube.U_().U());
-
-        assertCubeEquals(cube.U(), cube.U_().U_().U_());
-        assertCubeEquals(cube.U_(), cube.U().U().U());
-
-        assertCubeEquals(cube.U2(), cube.U().U());
-        assertCubeEquals(cube.U2(), cube.U_().U_());
-    }
-
-    @Test
-    public void testLTransforms() {
-        /*
-         * Rotate the LEFT back and forth and make sure transformations are equivalent.
-         */
-        assertCubeEquals(cube, cube.L2().L2());
-        assertCubeEquals(cube, cube.L()._L());
-        assertCubeEquals(cube, cube._L().L());
-
-        assertCubeEquals(cube.L(), cube._L()._L()._L());
-        assertCubeEquals(cube._L(), cube.L().L().L());
-
-        assertCubeEquals(cube.L2(), cube.L().L());
-        assertCubeEquals(cube.L2(), cube._L()._L());
-    }
-
-    @Test
-    public void testRTransforms() {
-        /*
-         * Rotate RIGHT face back and forth and make sure transformations are equivalent.
-         */
-        assertCubeEquals(cube, cube.R2().R2());
-        assertCubeEquals(cube, cube.R()._R());
-        assertCubeEquals(cube, cube._R().R());
-
-        assertCubeEquals(cube.R(), cube._R()._R()._R());
-        assertCubeEquals(cube._R(), cube.R().R().R());
-
-        assertCubeEquals(cube.R2(), cube.R().R());
-        assertCubeEquals(cube.R2(), cube._R()._R());
     }
 
     private void assertCubeEquals(Cube expected, Cube actual) {
