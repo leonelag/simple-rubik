@@ -168,10 +168,10 @@ public class Cube {
     public Cube D() {
         return new Cube(
             top,
-            replaceRow(left,  3, row(back,  3)),
+            replaceRow(left,  3, reverseRow(row(back,  3))),
             replaceRow(front, 3, row(left,  3)),
             replaceRow(right, 3, row(front, 3)),
-            replaceRow(back,  3, row(right, 3)),
+            replaceRow(back,  3, reverseRow(row(right, 3))),
             cwFace(bottom));
     }
 
@@ -180,8 +180,8 @@ public class Cube {
             top,
             replaceRow(left,  3, row(front, 3)),
             replaceRow(front, 3, row(right, 3)),
-            replaceRow(right, 3, row(back,  3)),
-            replaceRow(back, 3,  row(left,  3)),
+            replaceRow(right, 3, reverseRow(row(back,  3))),
+            replaceRow(back, 3,  reverseRow(row(left,  3))),
             ccwFace(bottom));
     }
 
@@ -189,9 +189,9 @@ public class Cube {
         return new Cube(
             top,
             replaceRow(left,  3, row(right, 3)),
-            replaceRow(front, 3, row(back,  3)),
+            replaceRow(front, 3, reverseRow(row(back,  3))),
             replaceRow(right, 3, row(left,  3)),
-            replaceRow(back,  3, row(front, 3)),
+            replaceRow(back,  3, reverseRow(row(front, 3))),
             rotateFace(bottom));
     }
 
