@@ -37,7 +37,7 @@ public class StepsTest {
 
     @Test
     public void test_U() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/_u.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/u_.txt");
         assertEquals(expectedCubeU, cube._U());
     }
 
@@ -55,7 +55,7 @@ public class StepsTest {
 
     @Test
     public void test_L() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/_l.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/l_.txt");
         assertEquals(expectedCubeU, cube._L());
     }
 
@@ -73,7 +73,7 @@ public class StepsTest {
 
     @Test
     public void test_R() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/_r.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/r_.txt");
         assertEquals(expectedCubeU, cube._R());
     }
 
@@ -91,7 +91,7 @@ public class StepsTest {
 
     @Test
     public void test_D() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/_d.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/d_.txt");
         assertEquals(expectedCubeU, cube._D());
     }
 
