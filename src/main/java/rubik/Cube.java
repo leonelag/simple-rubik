@@ -62,7 +62,9 @@ public class Cube {
           , right  = makeFace(R)
           , back   = makeFace(B)
           , bottom = makeFace(arr, 9 * 5);
-        return new Cube(top, left, front, right, back, bottom);
+        var cube = new Cube(top, left, front, right, back, bottom);
+        cube.validate();
+        return cube;
     }
 
     Cube(int top, int left, int front, int right, int back, int bottom) {
@@ -337,7 +339,7 @@ public class Cube {
     }
 
     /**
-     * Value of the cell in that face.
+     * Color of the cell in that face.
      */
     static int at(int face, int row, int col) {
         final int offset = 9 * (3 - row) + 3 * (3 - col);
@@ -406,6 +408,32 @@ public class Cube {
             offset -= 3;
         }
         return arr;
+    }
+
+    public static class InvalidCubeException extends RuntimeException {
+        InvalidCubeException(String msg) {
+            super(msg);
+        }
+    }
+
+    /**
+     * Validate color count; useful for testing.
+     */
+    public void validate() {
+        int[] faces = { top, bottom, left, right, front, back };
+        int[] count = new int[7];    // colors 1 to 6; ignore zero
+        for (int face: faces)
+            for (int r = 1; r <= 3; r++)
+                for (int c = 1; c <= 3; c++) {
+                    int color = at(face, r, c);
+                    if (! (1 <= color && color <= 6)) {
+                        throw new InvalidCubeException("Invalid color: " + color);
+                    }
+                    count[color]++;
+                }
+        for (int color = 1; color <= 6; color++)
+            if (count[color] != 9)
+                throw new InvalidCubeException("Invalid count for color " + color + ": " + count[color]);
     }
 
     @Override
