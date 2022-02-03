@@ -197,6 +197,36 @@ public class Cube {
             rotateFace(bottom));
     }
 
+    public Cube F() {
+        return new Cube(
+            replaceRow(top,   3, colCw(left, 3)),
+            replaceCol(left,  3, row(bottom, 1)),
+            cwFace(front),
+            replaceCol(right, 1, rowCw(top, 3)),
+            back,
+            replaceRow(bottom, 1, colCw(right, 1)));
+    }
+
+    public Cube _F() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Cube F2() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Cube B() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Cube _B() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    public Cube B2() {
+        throw new RuntimeException("Not implemented");
+    }
+
     /**
      * New face with replaced row.
      */
@@ -262,8 +292,8 @@ public class Cube {
      * Extract and rotate CW a single column from a face.
      * Column is returned as a row.
      */
-    static int colCw(int face, int col) {
-        final int colOffset = 3 * (3 - col);
+    static int colCw(int face, int c) {
+        final int colOffset = 3 * (3 - c);
         final int mask = 0b111;
         int offset1 = colOffset + 9 * 2
           , offset2 = colOffset + 9
@@ -279,8 +309,8 @@ public class Cube {
      * Extract and rotate CCW a single column from a face.
      * Column is returned as a row.
      */
-    static int colCcw(int face, int col) {
-        final int colOffset = 3 * (3 - col);
+    static int colCcw(int face, int c) {
+        final int colOffset = 3 * (3 - c);
         final int mask = 0b111;
         int offset1 = colOffset + 9 * 2
           , offset2 = colOffset + 9
@@ -289,6 +319,14 @@ public class Cube {
                 (face & (mask << offset1)) >> offset1,
                 (face & (mask << offset2)) >> offset2,
                 (face & (mask << offset3)) >> offset3);
+    }
+
+    static int rowCw(int face, int row) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    static int rowCcw(int face, int row) {
+        throw new RuntimeException("Not implemented");
     }
 
     /**
