@@ -64,6 +64,64 @@ public class CubeTest {
     }
 
     @Test
+    public void testRowCw() {
+        int f = Cube.makeFace(
+            1, 2, 3,
+            4, 5, 6,
+            7, 1, 2);
+
+        assertEquals(
+            Cube.makeFace(
+                0, 0, 1,
+                0, 0, 2,
+                0, 0, 3)
+            , Cube.rowCw(f, 1));
+
+        assertEquals(
+            Cube.makeFace(
+                    0, 4, 0,
+                    0, 5, 0,
+                    0, 6, 0)
+            , Cube.rowCw(f, 2));
+
+        assertEquals(
+            Cube.makeFace(
+                7, 0, 0,
+                1, 0, 0,
+                2, 0, 0)
+            , Cube.rowCw(f, 3));
+    }
+
+    @Test
+    public void testRowCcw() {
+        int f = Cube.makeFace(
+            1, 2, 3,
+            4, 5, 6,
+            7, 1, 2);
+
+        assertEquals(
+            Cube.makeFace(
+                3, 0, 0,
+                2, 0, 0,
+                1, 0, 0)
+            , Cube.rowCcw(f, 1));
+
+        assertEquals(
+            Cube.makeFace(
+                0, 6, 0,
+                0, 5, 0,
+                0, 4, 0)
+            , Cube.rowCcw(f, 2));
+
+        assertEquals(
+            Cube.makeFace(
+                0, 0, 2,
+                0, 0, 1,
+                0, 0, 7)
+            , Cube.rowCcw(f, 3));
+    }
+
+    @Test
     public void testCwFace() {
         int f = Cube.makeFace(1, 2, 3, 4, 5, 6, 7, 1, 2);
         assertArrayEquals(

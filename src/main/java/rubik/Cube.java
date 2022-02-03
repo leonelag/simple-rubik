@@ -321,12 +321,24 @@ public class Cube {
                 (face & (mask << offset3)) >> offset3);
     }
 
+    /**
+     * Extract and rotate CW a single row from a face.
+     * Returns a face rotated CW, with the row rotated as a column
+     *  and zeros in the other positions.
+     */
     static int rowCw(int face, int row) {
-        throw new RuntimeException("Not implemented");
+        final int mask = 0b111_111_111 << (9 * (3 - row));
+        return cwFace(face & mask);
     }
 
+    /**
+     * Extract and rotate CCW a single row from a face.
+     * Returns a face rotated CCW, with the row rotated as a column
+     *  and zeros in the other positions.
+     */
     static int rowCcw(int face, int row) {
-        throw new RuntimeException("Not implemented");
+        final int mask = 0b111_111_111 << (9 * (3 - row));
+        return ccwFace(face & mask);
     }
 
     /**
