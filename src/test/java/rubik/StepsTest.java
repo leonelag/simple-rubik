@@ -166,18 +166,20 @@ public class StepsTest {
     
     @Test
     public void testF() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/F.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/f.txt");
         assertCubeEquals(expectedCubeU, cube.F());
     }
 
     @Test
     public void test_F() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/_f.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/f_.txt");
         assertCubeEquals(expectedCubeU, cube._F());
     }
 
     @Test
     public void testF2() throws IOException {
+        Cube.fromResource(baseDir + "/base.txt");
+
         var expectedCubeU = Cube.fromResource(baseDir + "/f2.txt");
         assertCubeEquals(expectedCubeU, cube.F2());
     }
@@ -187,8 +189,8 @@ public class StepsTest {
         /*
          * Rotate the top back and forth and make sure transformations are equivalent.
          */
-        assertCubeEquals(cube, cube.F2().F2());
         assertCubeEquals(cube, cube.F()._F());
+        assertCubeEquals(cube, cube.F2().F2());
         assertCubeEquals(cube, cube._F().F());
 
         assertCubeEquals(cube.F(), cube._F()._F()._F());
@@ -206,7 +208,7 @@ public class StepsTest {
 
     @Test
     public void test_B() throws IOException {
-        var expectedCubeU = Cube.fromResource(baseDir + "/_b.txt");
+        var expectedCubeU = Cube.fromResource(baseDir + "/b_.txt");
         assertCubeEquals(expectedCubeU, cube._B());
     }
 

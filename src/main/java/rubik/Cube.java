@@ -200,7 +200,7 @@ public class Cube {
     public Cube F() {
         return new Cube(
             replaceRow(top,   3, colCw(left, 3)),
-            replaceCol(left,  3, row(bottom, 1)),
+            replaceCol(left,  3, rowCw(bottom, 1)),
             cwFace(front),
             replaceCol(right, 1, rowCw(top, 3)),
             back,
@@ -208,11 +208,23 @@ public class Cube {
     }
 
     public Cube _F() {
-        throw new RuntimeException("Not implemented");
+        return new Cube(
+            replaceRow(top,  3, colCcw(right, 1)),
+            replaceCol(left, 3, rowCcw(top, 3)),
+            ccwFace(front),
+            replaceCol(right, 1, rowCcw(bottom, 1)),
+            back,
+            replaceRow(bottom, 1, colCcw(left, 3)));
     }
 
     public Cube F2() {
-        throw new RuntimeException("Not implemented");
+        return new Cube(
+            replaceRow(top, 3, row(rotateFace(bottom), 3)),
+            replaceCol(left, 3, col(rotateFace(right), 3)),
+            rotateFace(front),
+            replaceCol(right, 1, col(rotateFace(left), 1)),
+            back,
+            replaceRow(bottom, 1, row(rotateFace(top), 1)));
     }
 
     public Cube B() {
@@ -327,6 +339,9 @@ public class Cube {
      *  and zeros in the other positions.
      */
     static int rowCw(int face, int row) {
+        /*
+         * TODO: modify this method or method colCw to make them symmetric
+         */
         final int mask = 0b111_111_111 << (9 * (3 - row));
         return cwFace(face & mask);
     }
@@ -337,6 +352,9 @@ public class Cube {
      *  and zeros in the other positions.
      */
     static int rowCcw(int face, int row) {
+        /*
+         * TODO: modify this method or method rowCcw to make them symmetric
+         */
         final int mask = 0b111_111_111 << (9 * (3 - row));
         return ccwFace(face & mask);
     }
@@ -484,6 +502,21 @@ public class Cube {
         for (int color = 1; color <= 6; color++)
             if (count[color] != 9)
                 throw new InvalidCubeException("Invalid count for color " + color + ": " + count[color]);
+    }
+
+    static String strFace(int face) {
+        var edge = "+-------+\n";
+        var sb = new StringBuilder(edge);
+        for (int r = 1; r <= 3; r++) {
+            sb.append("|");
+            for (int c = 1; c <= 3; c++) {
+                sb.append(' ');
+                sb.append(at(face, r, c));
+            }
+            sb.append(" |\n");
+        }
+        sb.append(edge);
+        return sb.toString();
     }
 
     @Override

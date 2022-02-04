@@ -139,9 +139,40 @@ public class CubeTest {
 
     @Test
     public void testReplaceRow() {
-        int f1 = Cube.makeFace(1, 1, 1, 2, 2, 2, 3 ,3, 3);
-        int expected = Cube.makeFace(4, 5, 6, 2, 2, 2, 3, 3, 3);
-        assertEquals(expected, Cube.replaceRow(f1, 1, Cube.makeRow(4, 5, 6)));
+        int f1 = Cube.makeFace(
+            1, 1, 1,
+            2, 2, 2,
+            3 ,3, 3);
+        int expected = Cube.makeFace(
+            4, 5, 6,
+            2, 2, 2,
+            3, 3, 3);
+
+        var actual = Cube.replaceRow(f1, 1, Cube.makeRow(4, 5, 6));
+        assertEquals(Cube.strFace(expected), Cube.strFace(actual));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testReplaceRow_2() {
+        int f1 = Cube.makeFace(
+            1, 2, 3,
+            2, 2, 2,
+            3 ,3, 3);
+
+        int f2 = Cube.makeFace(
+            4, 5, 6,
+            4, 4, 4,
+            5, 5, 5);
+
+        int expected = Cube.makeFace(
+            4, 5, 6,
+            2, 2, 2,
+            3, 3, 3);
+        var actual = Cube.replaceRow(f1, 1, Cube.row(f2, 1));
+
+        assertEquals(Cube.strFace(expected), Cube.strFace(actual));
+        assertEquals(expected, actual);
     }
 
     @Test
