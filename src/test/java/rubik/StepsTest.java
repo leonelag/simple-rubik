@@ -230,8 +230,8 @@ public class StepsTest {
         assertCubeEquals(cube.B(), cube._B()._B()._B());
         assertCubeEquals(cube._B(), cube.B().B().B());
 
-        assertCubeEquals(cube.F2(), cube.B().B());
-        assertCubeEquals(cube.F2(), cube._B()._B());
+        assertCubeEquals(cube.B2(), cube.B().B());
+        assertCubeEquals(cube.B2(), cube._B()._B());
     }
 
     private void assertCubeEquals(Cube expected, Cube actual) {

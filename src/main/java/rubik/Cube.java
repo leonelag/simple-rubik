@@ -228,15 +228,33 @@ public class Cube {
     }
 
     public Cube B() {
-        throw new RuntimeException("Not implemented");
+        return new Cube(
+            replaceRow(top, 1, colCcw(right, 3)),
+            replaceCol(left, 1, rowCcw(top, 1)),
+            front,
+            replaceCol(right, 3, rowCcw(bottom, 3)),
+            cwFace(back),
+            replaceRow(bottom, 3, row(ccwFace(left), 3)));
     }
 
     public Cube _B() {
-        throw new RuntimeException("Not implemented");
+        return new Cube(
+            replaceRow(top, 1, colCw(left, 1)),
+            replaceCol(left, 1, col(cwFace(bottom), 1)),
+            front,
+            replaceCol(right, 3, col(cwFace(top), 3)),
+            ccwFace(back),
+            replaceRow(bottom, 3, row(cwFace(right), 3)));
     }
 
     public Cube B2() {
-        throw new RuntimeException("Not implemented");
+        return new Cube(
+            replaceRow(top, 1, row(rotateFace(bottom), 1)),
+            replaceCol(left, 1, col(rotateFace(right), 1)),
+            front,
+            replaceCol(right, 3, col(rotateFace(left), 3)),
+            rotateFace(back),
+            replaceRow(bottom, 3, row(rotateFace(top), 3)));
     }
 
     /**
