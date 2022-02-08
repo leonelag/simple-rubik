@@ -527,18 +527,19 @@ public class Cube {
      */
     public void validate() {
         int[] faces = { top, bottom, left, right, front, back };
-        int[] count = new int[7];    // colors 1 to 6; ignore zero
+        int[] count = new int[8];    // colors 1 to 6, 7s are wildcards; ignore zero
         for (int face: faces)
             for (int r = 1; r <= 3; r++)
                 for (int c = 1; c <= 3; c++) {
                     int color = at(face, r, c);
-                    if (! (1 <= color && color <= 6)) {
+                    if (! (1 <= color && color <= 7)) { // less-than-eq seven, seven is a valid color, used as a wild card.
                         throw new InvalidCubeException("Invalid color: " + color);
                     }
                     count[color]++;
                 }
         for (int color = 1; color <= 6; color++)
-            if (count[color] != 9)
+            if (count[color] > 9)
+                // Some colors may be replaced with wild cards.
                 throw new InvalidCubeException("Invalid count for color " + color + ": " + count[color]);
     }
 
@@ -619,5 +620,29 @@ public class Cube {
             && this.right  == that.right
             && this.back   == that.back
             && this.bottom == that.bottom;
+    }
+
+    /**
+     * Cubes are equivalent if cells have the same colors, considering wildcards.
+     */
+    public static boolean equivalent(Cube cube1, Cube cube2) {
+        return faceEquivalent(cube1.top,    cube2.top)
+            && faceEquivalent(cube1.left,   cube2.left)
+            && faceEquivalent(cube1.front,  cube2.front)
+            && faceEquivalent(cube1.right,  cube2.right)
+            && faceEquivalent(cube1.back,   cube2.back)
+            && faceEquivalent(cube1.bottom, cube2.bottom);
+    }
+
+    private static boolean faceEquivalent(int face1, int face2) {
+        for (int r = 1; r <= 3; r++) {
+            for (int c = 1; c <= 3; c++) {
+                int c1 = at(face1, r, c),
+                    c2 = at(face2, r, c);
+                if (c1 != 7 && c2 != 7 && c1 != c2)
+                    return false;
+            }
+        }
+        return true;
     }
 }

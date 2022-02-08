@@ -2,13 +2,13 @@ package rubik;
 
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class CubeTest {
     private final Cube cube1 = Cube.fromResource("/cube1/base.txt");
@@ -250,5 +250,27 @@ public class CubeTest {
     public void testFromResource() throws IOException {
         var cube = Cube.fromResource("/cube1/base.txt");
         assertNotNull(cube);
+    }
+
+    @Test
+    public void testEquivalent() throws IOException {
+        var cube = Cube.fromResource("/equiv/base.txt");
+        assertNotNull(cube);
+
+        var equiv = Cube.fromResource("/equiv/equiv.txt");
+        assertNotNull(equiv);
+
+        assertTrue(Cube.equivalent(cube, equiv));
+    }
+
+    @Test
+    public void testEquivalent_notEquiv() throws IOException {
+        var cube = Cube.fromResource("/equiv/base.txt");
+        assertNotNull(cube);
+
+        var notEquiv = Cube.fromResource("/equiv/not-equiv.txt");
+        assertNotNull(notEquiv);
+
+        assertFalse(Cube.equivalent(cube, notEquiv));
     }
 }
