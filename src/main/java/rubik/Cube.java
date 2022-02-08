@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Scanner;
 
@@ -25,20 +28,37 @@ public class Cube {
         return new String(bytes, StandardCharsets.US_ASCII);
     }
 
-    public static Cube fromResource(String resourceName) throws IOException {
+    private static int[] intTokens(String resourceName) throws IOException {
         var txt = slurp(resourceName);
         var sc = new Scanner(txt);
+        var ints = new ArrayList<Integer>();
 
-        final int nCells = 9 * 6;
-        final int[] arr = new int[nCells];
-        for (int i = 0; i < nCells; i++) {
-            OptionalInt val = parseInt(sc.next());
-            while (val.isEmpty())
-                val = parseInt(sc.next());
-            arr[i] = val.getAsInt();
+        while (sc.hasNextLine()) {
+            var line = sc.nextLine();
+            // Discard comment from line, discard whole line if it is a comment.
+            int idx = line.indexOf('#');
+            if (idx >= 0) line = line.substring(0, idx);
+            if (line.isEmpty()) continue;
+            for (var piece: line.split("\s")) {
+                var op = parseInt(piece);
+                if (op.isPresent())
+                    ints.add(op.getAsInt());
+            }
         }
-        if (sc.hasNextInt())
-            throw new IllegalArgumentException("Trailing data in input");
+        int sz = ints.size();
+        int[] arr = new int[sz];
+        for (int i = 0; i < sz; i++)
+            arr[i] = ints.get(i);
+        return arr;
+    }
+
+    public static Cube fromResource(String resourceName) throws IOException {
+        final int nCells = 9 * 6;
+        final int[] arr = intTokens(resourceName);
+        if (arr.length != nCells) {
+            throw new IllegalArgumentException("Invalid input data, not enough cells." +
+                    " Expected " + nCells + ", got " + arr.length);
+        }
 
         int top = makeFace(arr, 0);
 

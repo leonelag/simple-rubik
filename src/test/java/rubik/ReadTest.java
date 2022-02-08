@@ -4,9 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -35,14 +33,7 @@ public class ReadTest {
         var cube = Cube.fromResource(resourceName);
         assertNotNull(cube);
 
-        var txt = slurp(resourceName);
-        assertEquals(txt, cube.toString());
-    }
-
-    private String slurp(String resourceName) throws IOException {
-        var res = getClass().getResource(resourceName);
-        if (res == null) throw new FileNotFoundException("Resource not found: " + resourceName);
-        var bytes = res.openStream().readAllBytes();
-        return new String(bytes, StandardCharsets.US_ASCII);
+        var expected = Cube.fromResource(baseDir + "/base_nocomments.txt");
+        assertEquals(expected, cube);
     }
 }

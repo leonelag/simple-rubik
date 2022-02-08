@@ -1,10 +1,5 @@
-#
-# Comments are allowed :-)
-# Numbers such as 123 in comments should not break the parser.
-# The parser is smart to only read numbers (such as 1, 2, 3, 4) not in comments and ignore other tokens.
-#
         +-------+
-        | 1 1 1 |                   # Comments are also allowed further right in a line.
+        | 1 1 1 |
         | 1 1 1 |
         | 1 1 1 |
 +-------+-------+-------+-------+

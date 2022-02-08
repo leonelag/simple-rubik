@@ -250,15 +250,5 @@ public class CubeTest {
     public void testFromResource() throws IOException {
         var cube = Cube.fromResource("/cube1/base.txt");
         assertNotNull(cube);
-
-        var txt = slurp("/cube1/base.txt");
-        assertEquals(txt, cube.toString());
-    }
-
-    private String slurp(String resourceName) throws IOException {
-        var res = getClass().getResource(resourceName);
-        if (res == null) throw new FileNotFoundException("Resource not found: " + resourceName);
-        var bytes = res.openStream().readAllBytes();
-        return new String(bytes, StandardCharsets.US_ASCII);
     }
 }
